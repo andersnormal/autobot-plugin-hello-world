@@ -1,0 +1,51 @@
+project_name: autobot-plugin-hello-world
+
+env:
+  - CGO_ENABLED=0
+  - GO111MODULE=on
+
+builds:
+  -
+    id: autobot-plugin-hello-world
+    binary: autobot-plugin-hello-world
+    main: main.go
+    ldflags:
+      - -s -w
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - 386
+      - amd64
+    ignore:
+      - goos: darwin
+        goarch: 386
+
+release:
+  draft: false
+
+snapshot:
+  name_template: "{{.Tag}}"
+
+checksum:
+  name_template: "autobot_plugin_slack_checksums.txt"
+
+archives:
+  -
+    id: plugin-slack
+    builds:
+    - autobot-plugin-hello-world
+    name_template: "plugin_slack_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+dockers:
+  -
+    dockerfile: plugin-slack/Dockerfile
+    goos: linux
+    goarch: amd64
+    binaries:
+      - autobot-plugin-hello-world
+    image_templates:
+     - "andersnormal/{{.ProjectName}}:latest"
+     - "andersnormal/{{.ProjectName}}:{{ .Tag }}"
+     - "andersnormal/{{.ProjectName}}"
