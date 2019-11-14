@@ -29,7 +29,7 @@ snapshot:
   name_template: "{{.Tag}}"
 
 checksum:
-  name_template: "autobot_plugin_slack_checksums.txt"
+  name_template: "autobot_plugin_hello_world_checksums.txt"
 
 archives:
   -
@@ -40,7 +40,7 @@ archives:
 
 dockers:
   -
-    dockerfile: plugin-slack/Dockerfile
+    dockerfile: Dockerfile
     goos: linux
     goarch: amd64
     binaries:
